@@ -1,0 +1,10 @@
+query pins($where: JSON) {
+  pins(where: $where) {
+    id
+    imageUrl
+    user {
+      id
+      screenName
+    }
+  }
+}

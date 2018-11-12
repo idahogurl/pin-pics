@@ -1,28 +1,26 @@
-import uuid from 'uuid/v4';
-import { User } from './models';
+import { User } from './db/models';
 
-export default async function processLogin(req, res, next) {
+const processLogin = async function processLogin(req, res, next) {
   try {
-    const {
-      facebook: id, displayName, name, email,
-    } = req.body;
+    const { id, name, email } = req.body;
 
-    const token = Math.random().toString(36).substr(2, 100);
     let user = await User.findOne({ where: { id } });
 
     if (!user) {
+      console.log('create it');
       user = await User.create({
         id,
-        displayName,
-        name,
+        fullName: name,
         email,
+        screenName: email.substring(0, email.indexOf('@')),
       });
     }
 
-    res.cookie('token', `${user.id}|${token}`, { signed: true, httpOnly: true });
     res.redirect(302, '/');
     next();
   } catch (err) {
     next(err);
   }
-}
+};
+
+export default processLogin;

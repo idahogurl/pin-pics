@@ -1,0 +1,12 @@
+{
+  "development": {
+    "username": "",
+    "password": "",
+    "host": "localhost",
+    "database": "pin_pics",
+    "dialect": "postgres"
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL"
+  }
+}

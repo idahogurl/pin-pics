@@ -1,0 +1,7 @@
+node_modules
+localhost.cert
+localhost.key
+yarn.lock
+localhost.cert
+.DS_STORE
+.env
