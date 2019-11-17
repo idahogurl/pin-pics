@@ -1,14 +1,13 @@
-import { User } from './db/models';
+const models = require('./db/models');
 
-const processLogin = async function processLogin(req, res, next) {
+module.exports = async function processLogin(req, res, next) {
   try {
     const { id, name, email } = req.body;
 
-    let user = await User.findOne({ where: { id } });
+    let user = await models.User.findOne({ where: { id } });
 
     if (!user) {
-      console.log('create it');
-      user = await User.create({
+      user = await models.User.create({
         id,
         fullName: name,
         email,
@@ -22,5 +21,3 @@ const processLogin = async function processLogin(req, res, next) {
     next(err);
   }
 };
-
-export default processLogin;

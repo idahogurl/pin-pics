@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import AWN from 'awesome-notifications';
 import NavBarLink from '../components/NavBarLink';
 import LoginButton from '../components/LoginButton';
@@ -15,8 +15,9 @@ const onClick = function onClick() {
   }
 };
 
-const NavBar = React.memo(() => (
-  <nav className="navbar navbar-expand-lg navbar-light border-bottom">
+export default function NavBar() {
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light border-bottom">
     <a href="/" className="navbar-brand">
       <img src="images/logo.png" alt="Pin Pics" height="100" />
     </a>
@@ -43,7 +44,5 @@ const NavBar = React.memo(() => (
         </NavBarLink>
       </ul>
     </div>
-  </nav>
-));
-
-export default NavBar;
+  </nav>);
+}

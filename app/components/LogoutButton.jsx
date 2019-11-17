@@ -6,8 +6,6 @@ const onLogout = function onLogout() {
   window.location = '/';
 };
 
-const LogoutButton = function LogoutButton() {
+export default function LogoutButton() {
   return <FacebookButton onClick={onLogout}>Log Out</FacebookButton>;
 };
-
-export default LogoutButton;

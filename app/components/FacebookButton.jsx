@@ -8,12 +8,12 @@ const style = {
   color: 'white',
 };
 
-const FacebookButton = React.memo((props) => {
+function FacebookButton(props) {
   const { children, onClick } = props;
   return (
     <FelaComponent
-      style={style}
-      render={({ className }) => (
+      style={style}>
+      {({ className }) => (
         <div className="mr-3 flex-grow-1">
           <button className={classNames('btn', className)} onClick={onClick}>
             <img src="images/facebook-app-logo.svg" className="fb-icon align-middle mr-2" alt="" aria-hidden="true" />
@@ -22,10 +22,9 @@ const FacebookButton = React.memo((props) => {
             </span>
           </button>
         </div>
-      )
-      }
-    />);
-});
+      )}
+    </FelaComponent>);
+};
 
 FacebookButton.propTypes = {
   onClick: PropTypes.func.isRequired,

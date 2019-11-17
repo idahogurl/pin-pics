@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link } from 'preact-router';
 import cn from 'classnames';
 
 function NavBarLink(props) {
@@ -9,7 +9,7 @@ function NavBarLink(props) {
 
   return (
     <div className={cn('nav-item', { active: currentPage === to })}>
-      <Link to={to} className="nav-link pl-2" onClick={onClick}>
+      <Link href={to} className="nav-link pl-2" onClick={onClick}>
         {children}
       </Link>
     </div>

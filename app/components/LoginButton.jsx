@@ -1,18 +1,19 @@
 import React from 'react';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import FacebookButton from './FacebookButton';
 
 import processResponse from '../utils/facebookResponse';
 
 const onLogin = async function onLogin(response) {
   const { id } = response;
-  sessionStorage.setItem('currentUser', id.toString());
+  const currentUser = id.toString();
+  sessionStorage.setItem('currentUser', currentUser);
 
   await processResponse(response);
-  window.location.reload();
+  window.location = `/${currentUser}`;
 };
 
-const LoginButton = function LoginButton() {
+export default function LoginButton() {
   return (
     <FacebookLogin
       appId="323585701513857"
@@ -25,6 +26,4 @@ const LoginButton = function LoginButton() {
       )}
     />
   );
-};
-
-export default LoginButton;
+}

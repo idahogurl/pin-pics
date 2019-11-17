@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Mutation } from 'react-apollo';
+import { Link } from 'preact-router';
+import { useMutation } from 'urql';
 
 import DELETE_PIN from '../graphql/DeletePin.gql';
 
@@ -22,48 +22,37 @@ class PinListItem extends PureComponent {
   onClick = this.onClick.bind(this);
   onClick() {
     const { id } = this.props;
-    this.mutate({ variables: { input: { id } } })
+    this.executeMutation({ input: { id } } )
       .then(() => {
         window.location.reload();
       });
   }
 
-  mutate = null;
-
   render() {
     const { user, imageUrl } = this.props;
+    const [res, executeMutation] = useMutation(DELETE_PIN);
+    this.executeMutation = executeMutation;
 
+    if (res.error) {
+      onError(res.error);
+    }
+  
     // Allow delete if current user's pin
     return (
-      <Mutation mutation={DELETE_PIN}>
-        {(mutate, { loading, error }) => {
-          if (error) {
-            onError(error);
-          }
-
-          if (!this.mutate) {
-            this.mutate = mutate;
-          }
-
-          return (
-            <div className="card m-2 text-center" style={{ maxWidth: '18em' }}>
-              <img src={imageUrl} className="card-img-top" alt="" onError={imgError} />
-              <div className="card-body">
-                <div className="card-text">
-              Pinned by <Link to={`/${user.screenName}`}>@{user.screenName}</Link>
-                </div>
-              </div>
-              {'currentUser' in sessionStorage && sessionStorage.currentUser === user.id && (
-              <div className="card-footer">
-                <button className="btn btn-danger" onClick={this.onClick}>
-                  {loading && <Spinner />} Delete
-                </button>
-              </div>)}
-            </div>);
-        }
-      }
-      </Mutation>
-    );
+      <div className="card m-2 text-center" style={{ maxWidth: '18em' }}>
+        <img src={imageUrl} className="card-img-top" alt="" onError={imgError} />
+        <div className="card-body">
+          <div className="card-text">
+        Pinned by <Link href={`/${user.id}`}>@{user.screenName}</Link>
+          </div>
+        </div>
+        {'currentUser' in sessionStorage && sessionStorage.currentUser === user.id && (
+        <div className="card-footer">
+          <button className="btn btn-danger" onClick={this.onClick}>
+            {res.fetching && <Spinner />} Delete
+          </button>
+        </div>)}
+      </div>);
   }
 }
 

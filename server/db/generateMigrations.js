@@ -5,8 +5,8 @@ const fs = require('fs');
 const Classes = require('sequelize-migration-generator');
 
 const TEMPLATE = path.resolve(`${__dirname}/../../node_modules/sequelize-migration-generator/data/migration-file.js.ect`);
-const Model = Classes.Model;
-const Field = Classes.Field;
+const { Model } = Classes;
+const { Field } = Classes;
 let modelsDir = '/./models';
 let migrationsDir = '/./migrations';
 
@@ -34,7 +34,7 @@ function importModels(modelDir) {
   const db = {};
   fs
     .readdirSync(modelDir)
-    .filter(file => (file.indexOf('.') !== 0) && !file.includes('index') && (file.slice(-3) === '.js'))
+    .filter((file) => (file.indexOf('.') !== 0) && !file.includes('index') && (file.slice(-3) === '.js'))
     .forEach((file) => {
       const model = sequelize.import(path.join(modelDir, file));
       db[model.name] = model;
@@ -63,4 +63,3 @@ function main() {
 
 
 main();
-

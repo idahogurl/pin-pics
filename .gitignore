@@ -5,3 +5,4 @@ yarn.lock
 localhost.cert
 .DS_STORE
 .env
+.cache
