@@ -16,7 +16,7 @@ const onLogin = async function onLogin(response) {
 export default function LoginButton() {
   return (
     <FacebookLogin
-      appId="323585701513857"
+      appId="2524623997651700"
       callback={onLogin}
       fields="name,email"
       render={({ isWorking, isLoading, onClick }) => (
