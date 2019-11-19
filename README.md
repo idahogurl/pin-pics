@@ -26,19 +26,14 @@ Build an app that is functionally similar to this:  [https://wild-song.glitch.me
  - Node Express (v4) 
  - Babel (v7 with presets env & react) 
  - Sequelize (v4)
- - GraphQL Express Server
-
-**APIs:**
- - Facebook Login
-
-**Database:**
-- Development: SQLITE
-- Production: Postgres
+ - Apollo GraphQL Server for Express
+ - Postgres
 
 **Frontend:**
- - React (v16.4) 
- - React Router (v4) 
- - Apollo GraphQL Client (v2.1) 
+ - Preact (v10)
+ - Preact Router 
+ - Urql GraphQL client
+ - Facebook Login
  - Bootstrap (v4) 
  - FontAwesome (v4)
  - Fela
