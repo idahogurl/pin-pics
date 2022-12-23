@@ -1,6 +1,21 @@
 {
-    "env": {
-        "node": true
+    "extends": ["airbnb", "next/core-web-vitals"],
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+      "prefer-arrow-callback": "off",
+      "jsx-a11y/anchor-is-valid": [ "error", {
+        "components": [ "Link", "NavLink" ],
+        "specialLink": [ "to" ]
+      }],
+      "react/sort-comp": 0,
+      "react/state-in-constructor": "warn",
+      "react/prop-types": "warn"
     },
-    "extends": "airbnb-base"
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
 }

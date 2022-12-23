@@ -1,18 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'preact-router';
+import Link from 'next/link';
 import cn from 'classnames';
 
 function NavBarLink(props) {
   const { to, children, onClick } = props;
-  const currentPage = window.location.pathname;
+  // const currentPage = window.location.pathname;
 
   return (
-    <div className={cn('nav-item', { active: currentPage === to })}>
-      <Link href={to} className="nav-link pl-2" onClick={onClick}>
-        {children}
-      </Link>
-    </div>
+  // <div className={cn('nav-item', { active: currentPage === to })}>
+    <Link href={to} className="nav-link pl-2" onClick={onClick}>
+      {children}
+    </Link>
+  // </div>
   );
 }
 

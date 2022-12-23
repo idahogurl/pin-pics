@@ -12,7 +12,8 @@ function FacebookButton(props) {
   const { children, onClick } = props;
   return (
     <FelaComponent
-      style={style}>
+      style={style}
+    >
       {({ className }) => (
         <div className="mr-3 flex-grow-1">
           <button className={classNames('btn', className)} onClick={onClick}>
@@ -23,8 +24,9 @@ function FacebookButton(props) {
           </button>
         </div>
       )}
-    </FelaComponent>);
-};
+    </FelaComponent>
+  );
+}
 
 FacebookButton.propTypes = {
   onClick: PropTypes.func.isRequired,

@@ -20,9 +20,10 @@ const imgError = function imgError(e) {
 
 class PinListItem extends PureComponent {
   onClick = this.onClick.bind(this);
+
   onClick() {
     const { id } = this.props;
-    this.executeMutation({ input: { id } } )
+    this.executeMutation({ input: { id } })
       .then(() => {
         window.location.reload();
       });
@@ -36,23 +37,32 @@ class PinListItem extends PureComponent {
     if (res.error) {
       onError(res.error);
     }
-  
+
     // Allow delete if current user's pin
     return (
       <div className="card m-2 text-center" style={{ maxWidth: '18em' }}>
         <img src={imageUrl} className="card-img-top" alt="" onError={imgError} />
         <div className="card-body">
           <div className="card-text">
-        Pinned by <Link href={`/${user.id}`}>@{user.screenName}</Link>
+            Pinned by
+            {' '}
+            <Link href={`/${user.id}`}>
+              @
+              {user.screenName}
+            </Link>
           </div>
         </div>
         {'currentUser' in sessionStorage && sessionStorage.currentUser === user.id && (
         <div className="card-footer">
           <button className="btn btn-danger" onClick={this.onClick}>
-            {res.fetching && <Spinner />} Delete
+            {res.fetching && <Spinner />}
+            {' '}
+            Delete
           </button>
-        </div>)}
-      </div>);
+        </div>
+        )}
+      </div>
+    );
   }
 }
 

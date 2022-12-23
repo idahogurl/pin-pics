@@ -8,4 +8,4 @@ const onLogout = function onLogout() {
 
 export default function LogoutButton() {
   return <FacebookButton onClick={onLogout}>Log Out</FacebookButton>;
-};
+}
