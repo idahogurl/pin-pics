@@ -1,27 +1,28 @@
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Image from 'next/image';
+
+import { signIn, signOut } from 'next-auth/react';
 import NavBarLink from './NavBarLink';
-// import LoginButton from '../components/LoginButton';
-// import LogoutButton from '../components/LogoutButton';
+import GitHubButton from './GitHubButton';
 
-const onClick = function onClick() {
-  if ('currentUser' in sessionStorage === false) {
-    const options = {
-      position: 'top-right',
-    };
+export default function NavBar({ session }) {
+  const onClick = function onClick() {
+    if (!session) {
+      const options = {
+        position: 'top-right',
+      };
 
-    const notifier = new AWN(options);
-    notifier.alert('Log in to view your pins');
-  }
-};
-
-export default function NavBar() {
+      // const notifier = new AWN(options);
+      // notifier.alert('Log in to view your pins');
+    }
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-light border-bottom">
       <Link href="/" className="navbar-brand">
-        <Image src="/logo.png" alt="Pin Pics" height={119} width={100} />
+        <Image src="/logo.png" alt="Pin Pics" height={119} width={100} priority />
       </Link>
-      {/* {'currentUser' in sessionStorage ? <LogoutButton /> : <LoginButton />} */}
+      {session ? <GitHubButton onClick={() => signOut('github')}>Sign Out of</GitHubButton> : <GitHubButton onClick={() => signIn('github')}>Sign In with</GitHubButton>}
       <button
         className="navbar-toggler"
         type="button"
@@ -37,7 +38,8 @@ export default function NavBar() {
         <ul className="navbar-nav mr-auto">
           <NavBarLink to="/">Home</NavBarLink>
           <NavBarLink
-            to="/"
+            to="/pins"
+            // eslint-disable-next-line react/jsx-no-bind
             onClick={onClick}
           >
             My Pins
@@ -47,3 +49,18 @@ export default function NavBar() {
     </nav>
   );
 }
+
+NavBar.propTypes = {
+  session: PropTypes.shape({
+    user: PropTypes.shape({
+      name: PropTypes.string,
+      email: PropTypes.string,
+      image: PropTypes.string,
+    }),
+    expires: PropTypes.string,
+  }),
+};
+
+NavBar.defaultProps = {
+  session: undefined,
+};
