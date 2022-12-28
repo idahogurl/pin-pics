@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
 const ect = require('ect')();
 const fs = require('fs');
@@ -11,7 +12,7 @@ let modelsDir = '/./models';
 let migrationsDir = '/./migrations';
 
 const env = process.env.NODE_ENV || 'development';
-const config = require(`${__dirname}/config/config.json`)[env];
+const config = require('./config/config.json')[env];
 
 const Sequelize = require('sequelize');
 
@@ -49,7 +50,6 @@ function importModels(modelDir) {
   return db;
 }
 
-
 function main() {
   modelsDir = path.resolve(`${__dirname}${modelsDir}`);
   migrationsDir = path.resolve(`${__dirname}${migrationsDir}`);
@@ -60,6 +60,5 @@ function main() {
       genMigration(models[modelName], i);
     });
 }
-
 
 main();
