@@ -1,7 +1,8 @@
 import { memo } from 'react';
 import { useQuery } from 'urql';
 import PropTypes from 'prop-types';
-// import onError from '../utils/onError';
+import Script from 'next/script';
+import onError from '../utils/onError';
 import Spinner from './Spinner';
 import AddPin from './AddPin';
 import PinListItem from './PinListItem';
@@ -23,7 +24,7 @@ const PinList = memo(function PinList(props) {
   if (res.fetching) {
     return <Spinner size={2} />;
   } if (res.error) {
-    // onError(res.error);
+    onError(res.error);
     console.error(res.error);
   }
   const { data } = res;
@@ -48,6 +49,7 @@ const PinList = memo(function PinList(props) {
           />
         ))}
       </div>
+      <Script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js" />
     </>
   );
 });

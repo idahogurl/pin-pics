@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types, react/jsx-props-no-spreading */
 import { config } from '@fortawesome/fontawesome-svg-core';
 import Head from 'next/head';
-import Script from 'next/script';
 import { SessionProvider } from 'next-auth/react';
 import { withUrqlClient } from 'next-urql';
 
@@ -19,7 +18,6 @@ function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js" />
       <SessionProvider session={pageProps.session}>
         <Component {...pageProps} />
       </SessionProvider>
