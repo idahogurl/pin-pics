@@ -1,5 +1,5 @@
-query pins($id: ID!) {
-  pins: getPinsUsingUserId(id: $id) {
+query pins {
+  pins: getPinList {
     id
     image_url
     user {

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:migrate": "dotenv -- yarn sequelize db:migrate --env production --config ./server/db/config/config.json --migrations-path ./server/db/migrations --models-path ./server/db/models",
+    "db:migrate": "NODE_ENV=development dotenv -- yarn sequelize db:migrate --env development --config ./server/db/config/config.json --migrations-path ./server/db/migrations --models-path ./server/db/models",
     "create:migration": "yarn sequelize migration:generate --config ./server/db/config/config.json --migrations-path ./server/db/migrations --models-path ./sever/db/models",
     "db:migrate:undo": "yarn sequelize db:migrate:undo --config ./server/db/config/config.json --migrations-path ./server/db/migrations --models-path ./server/db/models",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -29,6 +29,7 @@
     "dataloader-sequelize": "^2.3.3",
     "formik": "^2.2.9",
     "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
     "next": "13.1.0",
     "next-auth": "^4.18.7",
     "next-urql": "^4.0.2",

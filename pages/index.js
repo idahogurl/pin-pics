@@ -4,8 +4,7 @@ import { useSession } from 'next-auth/react';
 import NavBar from '../components/NavBar';
 import PinList from '../components/PinList';
 
-export default function Home(pageProps) {
-  const { urqlClient } = pageProps;
+export default function Home() {
   const { data: session } = useSession();
   return (
     <>
@@ -19,7 +18,7 @@ export default function Home(pageProps) {
         <NavBar session={session} />
       </header>
       <main>
-        <PinList client={urqlClient} />
+        <PinList session={session} />
       </main>
     </>
   );

@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types, react/jsx-props-no-spreading */
 import { config } from '@fortawesome/fontawesome-svg-core';
 import Head from 'next/head';
+import Script from 'next/script';
 import { SessionProvider } from 'next-auth/react';
-import { dedupExchange, cacheExchange, fetchExchange } from 'urql';
 import { withUrqlClient } from 'next-urql';
 
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -19,6 +19,7 @@ function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js" />
       <SessionProvider session={pageProps.session}>
         <Component {...pageProps} />
       </SessionProvider>
@@ -26,10 +27,9 @@ function App({ Component, pageProps }) {
   );
 }
 
-export default withUrqlClient((ssrExchange) => ({
-  url: 'https://most.stepzen.net/api/apps/__graphql',
-  exchanges: [dedupExchange, cacheExchange, ssrExchange, fetchExchange],
+export default withUrqlClient(() => ({
+  url: process.env.NEXT_PUBLIC_STEPZEN_ENDPOINT,
   fetchOptions: {
-    headers: { authorization: 'Apikey most::stepzen.net+1000::809c7ed87aefa87e3a5cef8dab9059de96e754cb121a8ff2495bbfe1fbf65f98' },
+    headers: { authorization: `Apikey ${process.env.NEXT_PUBLIC_STEPZEN_API_KEY}` },
   },
 }))(App);

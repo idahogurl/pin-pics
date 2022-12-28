@@ -1,10 +1,8 @@
-import React, { PureComponent } from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'preact-router';
+import Link from 'next/link';
 import { useMutation } from 'urql';
-
 import DELETE_PIN from '../graphql/DeletePin.gql';
-
 import onError from '../utils/onError';
 
 import Spinner from './Spinner';
@@ -18,61 +16,67 @@ const imgError = function imgError(e) {
   }
 };
 
-class PinListItem extends PureComponent {
-  onClick = this.onClick.bind(this);
+function PinListItem({
+  session, user, id, image_url: imageUrl,
+}) {
+  const [res, executeMutation] = useMutation(DELETE_PIN);
 
-  onClick() {
-    const { id } = this.props;
-    this.executeMutation({ input: { id } })
-      .then(() => {
-        window.location.reload();
-      });
+  if (res.error) {
+    onError(res.error);
   }
 
-  render() {
-    const { user, imageUrl } = this.props;
-    const [res, executeMutation] = useMutation(DELETE_PIN);
-    this.executeMutation = executeMutation;
-
-    if (res.error) {
-      onError(res.error);
-    }
-
-    // Allow delete if current user's pin
-    return (
+  // Allow delete if current user's pin
+  return (
+    <div className="col-sm-6 col-lg-4 mb-4">
       <div className="card m-2 text-center" style={{ maxWidth: '18em' }}>
         <img src={imageUrl} className="card-img-top" alt="" onError={imgError} />
         <div className="card-body">
           <div className="card-text">
             Pinned by
             {' '}
-            <Link href={`/${user.id}`}>
+            <Link href={`/pins/${user.id}`}>
               @
-              {user.screenName}
+              {user.name}
             </Link>
           </div>
         </div>
-        {'currentUser' in sessionStorage && sessionStorage.currentUser === user.id && (
-        <div className="card-footer">
-          <button className="btn btn-danger" onClick={this.onClick}>
-            {res.fetching && <Spinner />}
-            {' '}
-            Delete
-          </button>
-        </div>
+        {session?.user.id === user.id && (
+          <div className="card-footer">
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() => {
+                executeMutation({ id });
+              }}
+            >
+              {res.fetching && <Spinner />}
+              {' '}
+              Delete
+            </button>
+          </div>
         )}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 PinListItem.propTypes = {
+  session: PropTypes.shape({
+    user: PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+    }),
+  }),
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    screenName: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
   }).isRequired,
   id: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
+  image_url: PropTypes.string.isRequired,
 };
 
-export default PinListItem;
+PinListItem.defaultProps = {
+  session: undefined,
+};
+
+export default memo(PinListItem);

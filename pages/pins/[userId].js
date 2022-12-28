@@ -1,9 +1,15 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import NavBar from '../components/NavBar';
 
-export default function Home() {
+import NavBar from '../../components/NavBar';
+import PinList from '../../components/PinList';
+
+export default function MyPins() {
+  const router = useRouter();
   const { data: session } = useSession();
+  const { userId } = router.query;
+
   return (
     <>
       <Head>
@@ -13,7 +19,7 @@ export default function Home() {
         <NavBar session={session} />
       </header>
       <main>
-        {/* <PinList userId={props.userId} /> */}
+        <PinList userId={userId} session={session} />
       </main>
     </>
   );

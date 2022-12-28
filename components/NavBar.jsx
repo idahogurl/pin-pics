@@ -7,16 +7,6 @@ import NavBarLink from './NavBarLink';
 import GitHubButton from './GitHubButton';
 
 export default function NavBar({ session }) {
-  const onClick = function onClick() {
-    if (!session) {
-      const options = {
-        position: 'top-right',
-      };
-
-      // const notifier = new AWN(options);
-      // notifier.alert('Log in to view your pins');
-    }
-  };
   return (
     <nav className="navbar navbar-expand-lg navbar-light border-bottom">
       <Link href="/" className="navbar-brand">
@@ -37,13 +27,13 @@ export default function NavBar({ session }) {
       <div className="collapse navbar-collapse" id="navbar-content">
         <ul className="navbar-nav mr-auto">
           <NavBarLink to="/">Home</NavBarLink>
-          <NavBarLink
-            to="/pins"
-            // eslint-disable-next-line react/jsx-no-bind
-            onClick={onClick}
-          >
-            My Pins
-          </NavBarLink>
+          {session ? (
+            <NavBarLink
+              to={`/pins/${session.user.id}`}
+            >
+              My Pins
+            </NavBarLink>
+          ) : null}
         </ul>
       </div>
     </nav>
@@ -53,11 +43,8 @@ export default function NavBar({ session }) {
 NavBar.propTypes = {
   session: PropTypes.shape({
     user: PropTypes.shape({
-      name: PropTypes.string,
-      email: PropTypes.string,
-      image: PropTypes.string,
+      id: PropTypes.string,
     }),
-    expires: PropTypes.string,
   }),
 };
 

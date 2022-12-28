@@ -17,4 +17,13 @@ export default NextAuth({
     }),
   ],
   adapter: SequelizeAdapter(sequelize),
+  callbacks: {
+    async session({ session, user }) {
+      if (session?.user) {
+        // eslint-disable-next-line no-param-reassign
+        session.user.id = user.id;
+      }
+      return session;
+    },
+  },
 });

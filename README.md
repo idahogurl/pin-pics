@@ -22,19 +22,12 @@ Build an app that is functionally similar to this:  [https://wild-song.glitch.me
 **Hint:**  [Masonry.js](http://masonry.desandro.com/)  is a library that allows for Pinterest-style image grids.
 
 ### Technology
-**Backend:**
- - Node Express (v4) 
- - Babel (v7 with presets env & react) 
- - Sequelize (v4)
- - Apollo GraphQL Server for Express
- - Postgres
-
-**Frontend:**
- - Preact (v10)
- - Preact Router 
+ - Next.js
+ - Sequelize (v5)
+ - CockroachDB 
+ - StepZen GraphQL API [https://github.com/idahogurl/stepzen-api)
  - Urql GraphQL client
- - Facebook Login
+ - NextAuth.js
  - Bootstrap (v4) 
- - FontAwesome (v4)
- - Fela
+ - FontAwesome (v6)
  - Awesome Notifications
