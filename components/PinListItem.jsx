@@ -17,7 +17,7 @@ const imgError = function imgError(e) {
 };
 
 function PinListItem({
-  session, user, id, image_url: imageUrl,
+  session, user, id, image_url: imageUrl, setImagesLoaded, showPinnerName,
 }) {
   const [res, executeMutation] = useMutation(DELETE_PIN);
 
@@ -29,24 +29,35 @@ function PinListItem({
   return (
     <div className="col-sm-6 col-lg-4 mb-4">
       <div className="card m-2 text-center" style={{ maxWidth: '18em' }}>
-        <img src={imageUrl} className="card-img-top" alt="" onError={imgError} />
+        <img
+          src={imageUrl}
+          className="card-img-top"
+          alt=""
+          onError={imgError}
+          onLoad={() => {
+            setImagesLoaded((v) => v + 1);
+          }}
+        />
         <div className="card-body">
-          <div className="card-text">
-            Pinned by
-            {' '}
-            <Link href={`/pins/${user.id}`}>
-              @
-              {user.name}
-            </Link>
-          </div>
+          {showPinnerName && (
+            <div className="card-text">
+              Pinned by
+              {' '}
+              <Link href={`/pins/${user.id}`}>
+                @
+                {user.name}
+              </Link>
+            </div>
+          )}
         </div>
-        {session?.user.id === user.id && (
+        {!showPinnerName && session?.user.id === user.id && (
           <div className="card-footer">
             <button
               type="button"
               className="btn btn-danger"
-              onClick={() => {
-                executeMutation({ id });
+              onClick={async () => {
+                await executeMutation({ id });
+                setImagesLoaded((v) => v - 1);
               }}
             >
               {res.fetching && <Spinner />}
@@ -73,6 +84,8 @@ PinListItem.propTypes = {
   }).isRequired,
   id: PropTypes.string.isRequired,
   image_url: PropTypes.string.isRequired,
+  setImagesLoaded: PropTypes.func.isRequired,
+  showPinnerName: PropTypes.bool.isRequired,
 };
 
 PinListItem.defaultProps = {

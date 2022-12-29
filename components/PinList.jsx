@@ -1,7 +1,6 @@
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useQuery } from 'urql';
 import PropTypes from 'prop-types';
-import Script from 'next/script';
 import onError from '../utils/onError';
 import Spinner from './Spinner';
 import AddPin from './AddPin';
@@ -9,9 +8,14 @@ import PinListItem from './PinListItem';
 import GET_ALL_PINS from '../graphql/GetAllPins.gql';
 import GET_PINS from '../graphql/GetPins.gql';
 
-// Show name if viewing certain user
-const PinList = memo(function PinList(props) {
+async function loadMasonry() {
+  const Masonry = (await import('masonry-layout')).default;
+  const msnry = new Masonry('.row', {});
+  msnry.reloadItems();
+}
+function PinList(props) {
   const { userId, session } = props;
+
   const query = userId ? GET_PINS : GET_ALL_PINS;
   const [res] = useQuery({
     query,
@@ -21,16 +25,26 @@ const PinList = memo(function PinList(props) {
     requestPolicy: 'cache-and-network',
   });
 
-  if (res.fetching) {
+  const { fetching, data, error } = res;
+
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+
+  useEffect(() => {
+    if (data && imagesLoaded === data.pins.length) {
+      loadMasonry();
+    }
+  }, [imagesLoaded, data]);
+
+  if (fetching) {
     return <Spinner size={2} />;
-  } if (res.error) {
-    onError(res.error);
+  } if (error) {
+    onError(error);
     console.error(res.error);
   }
-  const { data } = res;
+
   let screenName;
   if (userId !== undefined) {
-    screenName = data.pins.length ? `${data.pins[0].user.name}'s Pins` : 'User has no pins';
+    screenName = data.pins[0] ? `${data.pins[0].user.name}'s Pins` : 'User has no pins';
   }
   const title = userId ? screenName : 'All Pins';
   return (
@@ -38,21 +52,21 @@ const PinList = memo(function PinList(props) {
       <h1>{title}</h1>
       <div className="row" data-masonry='{"percentPosition": true }'>
         <AddPin session={session} />
-        {data.pins.map((p) => (
-        // Don't show pin name if showing wall
+        {data.pins[0] && data.pins.map((p) => (
           <PinListItem
             key={p.id}
             userFiltered={userId !== undefined}
             session={session}
+            setImagesLoaded={setImagesLoaded}
+            showPinnerName={userId === undefined}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...p}
           />
         ))}
       </div>
-      <Script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js" />
     </>
   );
-});
+}
 
 PinList.propTypes = {
   userId: PropTypes.string,
@@ -69,4 +83,4 @@ PinList.defaultProps = {
   session: undefined,
 };
 
-export default PinList;
+export default memo(PinList);

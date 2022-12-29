@@ -1,20 +1,21 @@
-import React from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
-// TODO: switch to font-awesome component
-const Spinner = React.memo(function Spinner(props) {
-  (
-    <i className={cn('mt-2 fa fa-spinner fa-spin', { [`fa-${props.size}x`]: props.size })} />
+function Spinner({ size }) {
+  return (
+    <FontAwesomeIcon icon={faSpinner} className={cn('mt-2 fa-spin')} size={`${size}x`} />
   );
-});
+}
 
 Spinner.propTypes = {
   size: PropTypes.number,
 };
 
 Spinner.defaultProps = {
-  size: 0,
+  size: 1,
 };
 
-export default Spinner;
+export default memo(Spinner);

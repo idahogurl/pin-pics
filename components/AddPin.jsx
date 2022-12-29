@@ -33,6 +33,7 @@ function AddPin({ session }) {
         try {
           executeMutation({ userId: session.user.id, imageUrl: values.imageUrl });
           actions.setSubmitting(false);
+          actions.resetForm();
         } catch (err) {
           console.error(err);
           // onError(err);
