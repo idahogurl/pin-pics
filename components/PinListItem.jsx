@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useMutation } from 'urql';
 import DELETE_PIN from '../graphql/DeletePin.gql';
-import onError from '../utils/onError';
 
 import Spinner from './Spinner';
 
@@ -22,7 +21,7 @@ function PinListItem({
   const [res, executeMutation] = useMutation(DELETE_PIN);
 
   if (res.error) {
-    onError(res.error);
+    throw res.error;
   }
 
   // Allow delete if current user's pin

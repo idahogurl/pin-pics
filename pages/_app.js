@@ -8,6 +8,8 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.css';
 
+import ErrorBoundary from '../components/ErrorBoundary';
+
 config.autoAddCss = false;
 
 function App({ Component, pageProps }) {
@@ -19,7 +21,7 @@ function App({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SessionProvider session={pageProps.session}>
-        <Component {...pageProps} />
+        <ErrorBoundary><Component {...pageProps} /></ErrorBoundary>
       </SessionProvider>
     </>
   );

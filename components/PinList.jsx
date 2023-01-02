@@ -1,7 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import { useQuery } from 'urql';
 import PropTypes from 'prop-types';
-import onError from '../utils/onError';
 import Spinner from './Spinner';
 import AddPin from './AddPin';
 import PinListItem from './PinListItem';
@@ -38,8 +37,7 @@ function PinList(props) {
   if (fetching) {
     return <Spinner size={2} />;
   } if (error) {
-    onError(error);
-    console.error(res.error);
+    throw error;
   }
 
   let screenName;

@@ -10,7 +10,7 @@ export default function Document() {
         <div className="container-fluid">
           <Main />
           <NextScript />
-          <footer>
+          <footer className="mt-5">
             <small className="ml-2"><a href="https://www.freepik.com/free-vector/three-old-style-photo-frame_2543453.htm">Logo via Freepik</a></small>
           </footer>
         </div>

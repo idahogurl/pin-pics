@@ -5,16 +5,13 @@ import { useMutation } from 'urql';
 import cn from 'classnames';
 import CREATE_PIN from '../graphql/CreatePin.gql';
 
-import onError from '../utils/onError';
-
 import Spinner from './Spinner';
 
 function AddPin({ session }) {
   const [res, executeMutation] = useMutation(CREATE_PIN);
 
   if (res.error) {
-    onError(res.error);
-    console.error(res.error);
+    throw res.error;
   }
 
   return (
@@ -30,15 +27,9 @@ function AddPin({ session }) {
       }}
       onSubmit={(values, actions) => {
         actions.setSubmitting(true);
-        try {
-          executeMutation({ userId: session.user.id, imageUrl: values.imageUrl });
-          actions.setSubmitting(false);
-          actions.resetForm();
-        } catch (err) {
-          console.error(err);
-          // onError(err);
-          actions.setSubmitting(false);
-        }
+        executeMutation({ userId: session.user.id, imageUrl: values.imageUrl });
+        actions.setSubmitting(false);
+        actions.resetForm();
       }}
     >
       {({ isSubmitting, errors }) => (
