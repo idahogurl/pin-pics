@@ -25,9 +25,8 @@ Build an app that is functionally similar to this:  [https://wild-song.glitch.me
  - Next.js
  - Sequelize (v5)
  - CockroachDB 
- - StepZen GraphQL API [https://github.com/idahogurl/stepzen-api)
+ - [StepZen GraphQL API](https://github.com/idahogurl/stepzen-api)
  - Urql GraphQL client
  - NextAuth.js
- - Bootstrap (v4) 
+ - Bootstrap (v5) 
  - FontAwesome (v6)
- - Awesome Notifications
