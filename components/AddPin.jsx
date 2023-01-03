@@ -25,9 +25,9 @@ function AddPin({ session }) {
 
         return errors;
       }}
-      onSubmit={(values, actions) => {
+      onSubmit={async (values, actions) => {
         actions.setSubmitting(true);
-        executeMutation({ userId: session.user.id, imageUrl: values.imageUrl });
+        await executeMutation({ userId: session.user.id, imageUrl: values.imageUrl });
         actions.setSubmitting(false);
         actions.resetForm();
       }}
