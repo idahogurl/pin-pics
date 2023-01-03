@@ -1,5 +1,7 @@
 import NextAuth from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
+// eslint-disable-next-line no-unused-vars
+import pg from 'pg';
 import Sequelize from 'sequelize-cockroachdb';
 import SequelizeAdapter from '@next-auth/sequelize-adapter';
 
