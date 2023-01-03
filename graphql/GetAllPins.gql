@@ -1,0 +1,10 @@
+query pins {
+  pins: getPinList {
+    id
+    image_url
+    user {
+      id
+      name
+    }
+  }
+}

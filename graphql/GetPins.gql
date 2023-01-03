@@ -1,0 +1,10 @@
+query pins($id: ID!) {
+  pins: getPinsUsingUserId(id: $id) {
+    id
+    image_url
+    user {
+      id
+      name
+    }
+  }
+}

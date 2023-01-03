@@ -1,7 +1,0 @@
-mutation deletePinById($input: DeletePinByIdInput!) {
-  deletePinById(input: $input) {
-    pin {
-      id
-    }
-  }
-}

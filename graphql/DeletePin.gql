@@ -1,0 +1,5 @@
+mutation deletePinById($id: ID!) {
+  deletePin(id: $id) {
+    id
+  }
+}

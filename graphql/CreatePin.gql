@@ -1,0 +1,5 @@
+mutation createPin($imageUrl: String!, $userId: ID!) {
+  insertPin(image_url: $imageUrl, user_id: $userId) {
+    id
+  }
+}

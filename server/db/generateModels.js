@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const SequelizeAuto = require('sequelize-auto');
 
 const auto = new SequelizeAuto('pin_pics', '', '', { dialect: 'postgres' });
