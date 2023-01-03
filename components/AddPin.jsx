@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Formik, Form, Field } from 'formik';
 import { useMutation } from 'urql';
 import cn from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import CREATE_PIN from '../graphql/CreatePin.gql';
 
 import Spinner from './Spinner';
@@ -39,7 +41,7 @@ function AddPin({ session }) {
               <div className="card-body">
                 <div className="form-group">
                   <h5 className="card-title">Add Pin</h5>
-                  <p><i className="fa fa-2x fa-plus-circle text-danger" aria-hidden="true" /></p>
+                  <p><FontAwesomeIcon icon={faPlusCircle} color="red" size="2x" /></p>
                   <Field type="text" name="imageUrl" placeholder="Image Url" className={cn('form-control', { 'is-invalid': errors.imageUrl })} required />
                   {errors.imageUrl && (
                   <span className="text-danger font-italic">
