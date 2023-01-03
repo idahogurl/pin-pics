@@ -23,7 +23,7 @@ Build an app that is functionally similar to this:  [https://wild-song.glitch.me
 
 ### Technology
  - Next.js
- - Sequelize (v5)
+ - Sequelize (v6)
  - CockroachDB 
  - [StepZen GraphQL API](https://github.com/idahogurl/stepzen-api)
  - Urql GraphQL client
